@@ -1,0 +1,4 @@
+rootProject.name = 'propertymanagement'
+include 'email'
+include 'property'
+include 'tenant'
