@@ -1,17 +1,18 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import ManageProperties from './components/ManageProperties.vue'
+import ManageTenants from './components/ManageTenants.vue'
+
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <ManageProperties />
     </div>
   </header>
 
   <main>
-    <TheWelcome />
+    <ManageTenants />
   </main>
 </template>
 
