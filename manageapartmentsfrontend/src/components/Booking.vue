@@ -9,10 +9,6 @@ const bookingStore = useBookingStore();
 const tenantStore = useTenantStore();
 const apartmentStore = useApartmentStore();
 
-bookingStore.fetchBookings();
-apartmentStore.fetchApartments();
-tenantStore.fetchTenants();
-
 
 let selectedApartment = ref(null)
 

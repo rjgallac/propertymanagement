@@ -7,8 +7,6 @@ import { usePropertyStore } from '@/stores/propertyStore';
 const apartmentStore = useApartmentStore();
 const propertyStore = usePropertyStore();
 
-apartmentStore.fetchApartments();
-
 let selectedPropertyId = ref(null)
 
 let addApartmentDto = ref({

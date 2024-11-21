@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import { useLandlordStore } from '@/stores/landlordStore';
 
 const landlordStore = useLandlordStore();
-landlordStore.fetchLandlords();
 
 let landlordName = ref("")
 

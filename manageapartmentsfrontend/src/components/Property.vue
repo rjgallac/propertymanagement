@@ -4,12 +4,8 @@ import { ref } from 'vue';
 import { usePropertyStore } from '@/stores/propertyStore';
 import { useLandlordStore } from '@/stores/landlordStore';
 
-
 const propertyStore = usePropertyStore();
 const landlordStore = useLandlordStore();
-
-
-propertyStore.fetchProperties();
 
 let addPropertyAddress = ref("")
 let landlordid = ref(null)

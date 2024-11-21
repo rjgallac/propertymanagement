@@ -1,13 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-
 import { useTenantStore } from '@/stores/tenantStore';
 
-
 const tenantStore = useTenantStore();
-
-
-tenantStore.fetchTenants();
 
 let tenantEmailAddress = ref("")
 let tenantAddress = ref("")
