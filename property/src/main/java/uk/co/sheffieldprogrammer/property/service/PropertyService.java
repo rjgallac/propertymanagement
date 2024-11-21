@@ -26,14 +26,15 @@ public class PropertyService {
     @Autowired
     private PropertyMapper propertyMapper;
 
-    public void addProperty(PropertyDto propertyDto) {
+    public PropertyDto addProperty(PropertyDto propertyDto) {
         Landlord landlord = landlordRepository.findById(propertyDto.getLandlordDto().getId()).get();
 
         Property property = Property.builder()
                 .landlord(landlord)
                 .address(propertyDto.getAddress())
                 .build();
-        propertyRepository.save(property);
+        Property saved = propertyRepository.save(property);
+        return propertyMapper.toDto(saved);
     }
 
     public List<PropertyDto> getProperties() {
@@ -48,5 +49,9 @@ public class PropertyService {
 
     public PropertyDto getProperty(Long id) {
         return propertyMapper.toDto(propertyRepository.findById(id).get());
+    }
+
+    public void delete(Long id) {
+        propertyRepository.deleteById(id);
     }
 }

@@ -3,6 +3,7 @@ package uk.co.sheffieldprogrammer.property.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.co.sheffieldprogrammer.property.dto.LandlordDto;
+import uk.co.sheffieldprogrammer.property.dto.LandlordMapper;
 import uk.co.sheffieldprogrammer.property.model.Landlord;
 import uk.co.sheffieldprogrammer.property.repository.LandlordRepository;
 
@@ -15,11 +16,13 @@ public class LandlordService {
     @Autowired
     private LandlordRepository landlordRepository;
 
-    public void addLandlord(LandlordDto landlordDto) {
+    @Autowired
+    private LandlordMapper landlordMapper;
+
+    public LandlordDto addLandlord(LandlordDto landlordDto) {
         Landlord landlord = Landlord.builder().name(landlordDto.getName()).build();
-
-        landlordRepository.save(landlord);
-
+        Landlord saved = landlordRepository.save(landlord);
+        return landlordMapper.toDto(saved);
     }
 
     public List<LandlordDto> getLandlords() {
@@ -28,6 +31,7 @@ public class LandlordService {
         for (Landlord landlord : landlords) {
             LandlordDto landlordDto = LandlordDto
                     .builder()
+                    .id(landlord.getId())
                     .name(landlord.getName())
 
                     .build();
@@ -38,4 +42,7 @@ public class LandlordService {
     }
 
 
+    public void deleteLandlord(Long id) {
+        landlordRepository.deleteById(id);
+    }
 }

@@ -34,10 +34,12 @@ public class BookingService {
         for (Booking booking : bookings) {
 
             ApartmentDto apartmentDto = propertyService.getApartment(booking.getApartmentId());
-            BookingDto.builder()
+            BookingDto bookingDto = BookingDto.builder()
+                    .id(booking.getId())
                     .tenantDto(TenantDto.builder().name(booking.getTenant().getName()).build())
                     .apartmentDto(apartmentDto)
                     .build();
+            bookingsDto.add(bookingDto);
         }
         return bookingsDto;
     }
@@ -69,4 +71,7 @@ public class BookingService {
         bookingRepository.save(booking);
     }
 
+    public void deleteBooking(Long id) {
+        bookingRepository.deleteById(id);
+    }
 }

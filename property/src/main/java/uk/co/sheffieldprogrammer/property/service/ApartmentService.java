@@ -46,7 +46,6 @@ public class ApartmentService {
             apartmentDtos.add(apartmentDto);
         }
         return apartmentDtos;
-
     }
 
     public ApartmentDto getApartmentById(Long id) {
@@ -58,5 +57,9 @@ public class ApartmentService {
             throw new ResourceNotFoundException("not found");
         }
 
+    }
+
+    public void deleteApartment(Long id) {
+        apartmentRepository.deleteById(id);
     }
 }

@@ -21,6 +21,7 @@ public class TenantService {
     public void addTenant(TenantDto tenantDto) {
         tenantRepository.save(Tenant.builder()
                 .address(tenantDto.getAddress())
+                .emailAddress(tenantDto.getEmailAddress())
                 .name(tenantDto.getName())
                 .build());
     }
@@ -41,5 +42,9 @@ public class TenantService {
         }
         return tenantDtos;
 
+    }
+
+    public void deleteTenant(Long id) {
+        tenantRepository.deleteById(id);
     }
 }

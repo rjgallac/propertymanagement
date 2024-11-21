@@ -12,8 +12,10 @@ public class PropertyMapper {
 
     public PropertyDto toDto(Property property) {
         List<ApartmentDto> apartmentDtos = new ArrayList<>();
-        for (Apartment apartment : property.getApartments()) {
-            apartmentDtos.add(ApartmentDto.builder().id(apartment.getId()).rent(apartment.getRent()).build());
+        if(property.getApartments() != null) {
+            for (Apartment apartment : property.getApartments()) {
+                apartmentDtos.add(ApartmentDto.builder().id(apartment.getId()).rent(apartment.getRent()).build());
+            }
         }
 
         return PropertyDto.builder()

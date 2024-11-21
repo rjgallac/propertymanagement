@@ -7,6 +7,7 @@ import uk.co.sheffieldprogrammer.tenant.service.TenantService;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("tenant")
 public class Tenant {
@@ -24,6 +25,10 @@ public class Tenant {
     @PostMapping
     public void addTenant(@RequestBody TenantDto tenantDto) {
         tenantService.addTenant(tenantDto);
+    }
 
+    @DeleteMapping("/{id}")
+    public void deleteTenant(@PathVariable("id") Long id){
+        tenantService.deleteTenant(id);
     }
 }

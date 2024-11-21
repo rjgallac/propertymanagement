@@ -9,6 +9,7 @@ import uk.co.sheffieldprogrammer.property.service.ApartmentService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("apartment")
 public class ApartmentController {
 
@@ -30,6 +31,11 @@ public class ApartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<ApartmentDto> getApartmentById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(apartmentService.getApartmentById(id));
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteApartment(@PathVariable("id") Long id) {
+        apartmentService.deleteApartment(id);
     }
 
 }

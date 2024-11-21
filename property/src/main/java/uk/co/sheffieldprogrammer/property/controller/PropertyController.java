@@ -8,6 +8,7 @@ import uk.co.sheffieldprogrammer.property.service.PropertyService;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("property")
 public class PropertyController {
@@ -17,8 +18,8 @@ public class PropertyController {
 
 
     @PostMapping
-    public void addProperty(@RequestBody PropertyDto propertyDto){
-        propertyService.addProperty(propertyDto);
+    public ResponseEntity<PropertyDto> addProperty(@RequestBody PropertyDto propertyDto){
+        return ResponseEntity.ok(propertyService.addProperty(propertyDto));
     }
 
     @GetMapping
@@ -34,6 +35,11 @@ public class PropertyController {
     @GetMapping("date")
     public List<PropertyDto> getByDateMaintenance() {
         return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProperty(@PathVariable("id") Long id) {
+        propertyService.delete(id);
     }
 
 }

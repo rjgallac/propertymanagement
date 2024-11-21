@@ -7,6 +7,7 @@ import uk.co.sheffieldprogrammer.tenant.service.BookingService;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("booking")
 public class Booking {
@@ -28,6 +29,11 @@ public class Booking {
     @GetMapping("/apartment/{id}")
     BookingDto getBookingsByApartmentId(@PathVariable("id") Long id) {
         return bookingService.getBookingByApartmentId(id);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteBooking(@PathVariable("id") Long id) {
+        bookingService.deleteBooking(id);
     }
 
 }
