@@ -27,25 +27,49 @@ function deleteBooking(id) {
 </script>
 
 <template>
-    
+    <div id="bookings">
   <h1>Bookings</h1>
+  <v-table>
+    <thead>
+      <tr><th>Tenant Name</th><th>Address</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      <tr v-for="booking in bookingStore.bookings">
+        <td>{{ booking.tenantDto.name }}</td>
+        <td> {{booking.apartmentDto.propertyDto.address}}</td>
+        <td> <v-btn @click="deleteBooking(booking.id)">del</v-btn></td>
+      </tr>
 
-  <li v-for="booking in bookingStore.bookings">
-    {{ booking.tenantDto.name }} - {{booking.apartmentDto.propertyDto.address}} <button @click="deleteBooking(booking.id)">del</button>
-  </li>
+    </tbody>
+  </v-table>
+ 
 
   <h2>Add Booking</h2>
   <form @submit.prevent="onSubmit">
-    Apartment: 
-      <select v-model="selectedApartment">
-        <option v-for="apartment in apartmentStore.apartments" 
-                :value="apartment.id">{{ apartment.rent }}</option>
-      </select>
-    Tenant: 
-      <select v-model="selectedTenant">
-        <option v-for="tenant in tenantStore.tenants" 
-                :value="tenant.id">{{ tenant.name }}</option>
-      </select>
-      <button @click="addBooking()">make booking</button>
+
+
+      <v-select v-model="selectedApartment" 
+        label="Apartment"
+        :items="apartmentStore.apartments"
+        item-title="rent"
+        item-value="id">
+      </v-select>
+      
+
+    <v-select v-model="selectedTenant" 
+        label="Tenant"
+        :items="tenantStore.tenants"
+        item-title="name"
+        item-value="id">
+      </v-select>
+     
+      <v-btn @click="addBooking()">make booking</v-btn>
   </form>
+</div>
 </template>
+
+<style scoped>
+#bookings {
+    padding: 20px;
+}
+</style>

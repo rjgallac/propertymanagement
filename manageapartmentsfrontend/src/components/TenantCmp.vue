@@ -19,18 +19,35 @@ function deleteTenant(id) {
 </script>
 
 <template>
-  <h1>Tenants</h1>
-  <li v-for="tenant in tenantStore.tenants">
-    {{ tenant.name }} - {{tenant.address}}  <button @click="deleteTenant(tenant.id)">del</button>
-  </li>
-  <h2>Add Tenant</h2>
-  <form @submit.prevent="onSubmit">
-    Tenant: 
-    Name: <input v-model="tenantName" type="text"></input>
-    Address: <input v-model="tenantAddress" type="text"></input>
+  <div id="tenants">
+    <h1>Tenants</h1>
+    <v-table>
+      <thead>
+        <tr><th>Tenant Name</th><th>Tenant Address</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr v-for="tenant in tenantStore.tenants">
+          <td>{{ tenant.name }}</td> 
+          <td>{{tenant.address}}</td>
+          <td><v-btn @click="deleteTenant(tenant.id)">del</v-btn></td>
+        </tr>
+      </tbody>
+    </v-table>
 
-    Email Address: <input v-model="tenantEmailAddress" type="text"></input>
+    <h2>Add Tenant</h2>
+    <form @submit.prevent="onSubmit">
+      
+      <v-text-field label="Name" v-model="tenantName" type="text"></v-text-field>
+      <v-text-field label="Address" v-model="tenantAddress" type="text"></v-text-field>
+      <v-text-field label="Email Address" v-model="tenantEmailAddress" type="text"></v-text-field>
 
-    <button @click="addTenant()"> submit</button>
-  </form>
+      <v-btn @click="addTenant()"> submit</v-btn>
+    </form>
+  </div>
 </template>
+
+<style scoped>
+#tenants {
+  padding: 20px;
+}
+</style>

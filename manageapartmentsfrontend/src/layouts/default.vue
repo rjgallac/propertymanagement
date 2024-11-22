@@ -4,12 +4,13 @@
       <!--  -->
       <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
       <v-divider></v-divider>
+      <RouterLink to="/landlord"><v-list-item link title="Landlords"></v-list-item></RouterLink>
       <RouterLink to="/property"><v-list-item link title="Properties"></v-list-item></RouterLink>
       <RouterLink to="/apartment"><v-list-item link title="Apartments"></v-list-item></RouterLink>
+      <v-divider></v-divider>
 
       <RouterLink to="/booking"><v-list-item link title="Bookings"></v-list-item></RouterLink>
       <RouterLink to="/tenant"><v-list-item link title="Tenants"></v-list-item></RouterLink>
-      <RouterLink to="/landlord"><v-list-item link title="Landlords"></v-list-item></RouterLink>
     </v-navigation-drawer>
 
     <v-app-bar>

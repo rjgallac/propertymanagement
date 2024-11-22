@@ -23,7 +23,11 @@ export const useApartmentStore = defineStore('apartment', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(apartment)
       };
-      fetch('http://localhost:8080/apartment', requestOptions);
+      fetch('http://localhost:8080/apartment', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            apartments.value.push(data);
+        });;
 
   }
 

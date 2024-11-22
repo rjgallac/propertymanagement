@@ -1,6 +1,7 @@
 package uk.co.sheffieldprogrammer.tenant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.co.sheffieldprogrammer.tenant.dto.TenantDto;
 import uk.co.sheffieldprogrammer.tenant.service.TenantService;
@@ -23,8 +24,8 @@ public class Tenant {
 
 
     @PostMapping
-    public void addTenant(@RequestBody TenantDto tenantDto) {
-        tenantService.addTenant(tenantDto);
+    public ResponseEntity<TenantDto> addTenant(@RequestBody TenantDto tenantDto) {
+        return ResponseEntity.ok(tenantService.addTenant(tenantDto));
     }
 
     @DeleteMapping("/{id}")

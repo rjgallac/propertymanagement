@@ -8,7 +8,8 @@ export const useTenantStore = defineStore('tenant', () => {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
-};
+  };
+
   function fetchTenants(){
     fetch('http://localhost:8081/tenant', requestOptions)
     .then(response => response.json())
@@ -23,8 +24,12 @@ export const useTenantStore = defineStore('tenant', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tenant)
       };
-      fetch('http://localhost:8081/tenant', requestOptions);
-
+      fetch('http://localhost:8081/tenant', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            tenants.value.push(data);
+        });
+      
   }
 
   function deleteTenant(id) {

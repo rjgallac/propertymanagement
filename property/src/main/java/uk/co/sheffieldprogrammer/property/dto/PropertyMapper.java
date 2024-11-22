@@ -22,7 +22,8 @@ public class PropertyMapper {
                 .id(property.getId())
                 .landlordDto(LandlordDto.builder()
                         .id(property.getLandlord().getId())
-                        .name(property.getLandlord().getName()).build())
+                        .name(property.getLandlord().getName())
+                        .build())
                 .address(property.getAddress())
                 .apartmentDtos(apartmentDtos)
                 .build();

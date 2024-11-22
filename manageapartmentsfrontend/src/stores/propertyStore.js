@@ -26,7 +26,7 @@ export const usePropertyStore = defineStore('property', () => {
     fetch('http://localhost:8080/property', requestOptions)
       .then(response => response.json())
       .then(data => {
-        this.properties.push(property);
+        properties.value.push(data);
       });
 
   }

@@ -1,6 +1,7 @@
 package uk.co.sheffieldprogrammer.tenant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.co.sheffieldprogrammer.tenant.dto.BookingDto;
 import uk.co.sheffieldprogrammer.tenant.service.BookingService;
@@ -16,14 +17,14 @@ public class Booking {
     private BookingService bookingService;
 
     @PostMapping()
-    void addBooking(@RequestBody BookingDto bookingDto){
-        bookingService.addBooking(bookingDto);
+    public ResponseEntity<BookingDto> addBooking(@RequestBody BookingDto bookingDto){
+        return ResponseEntity.ok(bookingService.addBooking(bookingDto));
     }
 
 
     @GetMapping()
-    List<BookingDto> getBookings() {
-        return bookingService.getBookings();
+    public ResponseEntity<List<BookingDto>> getBookings() {
+        return ResponseEntity.ok(bookingService.getBookings());
     }
 
     @GetMapping("/apartment/{id}")

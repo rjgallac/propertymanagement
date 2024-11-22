@@ -28,14 +28,15 @@ public class ApartmentService {
     @Autowired
     private ApartmentMapper apartmentMapper;
 
-    public void addApartment(ApartmentDto apartmentDto) {
+    public ApartmentDto addApartment(ApartmentDto apartmentDto) {
         Optional<Property> property = propertyRepository.findById(apartmentDto.getPropertyDto().getId());
         Apartment apartment = Apartment.builder()
                 .property(property.get())
                 .rent(apartmentDto.getRent())
                 .build();
 
-        apartmentRepository.save(apartment);
+        Apartment saved = apartmentRepository.save(apartment);
+        return apartmentMapper.toDto(apartment);
     }
 
     public List<ApartmentDto> getApartments() {

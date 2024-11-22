@@ -28,20 +28,38 @@ function deleteApartment(id) {
 </script>
 
 <template>
-    <h1>Apartments</h1>
-    <div class="greetings">
-    <li v-for="apartment in apartmentStore.apartments">
-        {{ apartment.rent }} - {{apartment.propertyDto.address }}  <button @click="deleteApartment(apartment.id)">del</button>
-    </li>
+    <div id="apartments">
+        <h1>Apartments</h1>
+        <v-table>
+            <thead>
+                <tr><th>Rent</th><th>address</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                <tr v-for="apartment in apartmentStore.apartments">
+                    <td>{{ apartment.rent }}</td>
+                    <td>{{apartment.propertyDto.address }}</td>
+                    <td>  <v-btn @click="deleteApartment(apartment.id)">del</v-btn></td>
+                </tr>
+            </tbody>
+        </v-table>
+
+        
+        <h2>Add Apartment</h2>
+        <form @submit.prevent="onSubmit">
+            <v-select v-model="selectedPropertyId" 
+                label="Property"
+                :items="propertyStore.properties"
+                item-title="address"
+                item-value="id">
+            </v-select>
+
+            <v-text-field label="Rent" v-model="addApartmentDto.rent" type="text"></v-text-field>
+            <v-btn @click="addApartment()"> submit</v-btn>
+        </form>
     </div>
-    <h2>Add Apartment</h2>
-    <form @submit.prevent="onSubmit">
-    Property: 
-        <select v-model="selectedPropertyId">
-        <option v-for="property in propertyStore.properties" 
-                :value="property.id">{{ property.address }}</option>
-        </select>
-    RENT: <input v-model="addApartmentDto.rent" type="text"></input>
-    <button @click="addApartment()"> submit</button>
-    </form>
 </template>
+<style scoped>
+#apartments {
+    padding: 20px;
+}
+</style>

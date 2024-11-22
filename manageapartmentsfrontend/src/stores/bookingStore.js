@@ -23,7 +23,11 @@ export const useBookingStore = defineStore('booking', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(booking)
     };
-    fetch('http://localhost:8081/booking', requestOptions);
+    fetch('http://localhost:8081/booking', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+          bookings.value.push(data);
+      });
 
   }
 

@@ -26,8 +26,8 @@ export const useLandlordStore = defineStore('landlord', () => {
       fetch('http://localhost:8080/landlord', requestOptions)
         .then(response => response.json())
         .then(data => {
-            landlords.value.push(landlord);
-        });;
+            landlords.value.push(data);
+        });
 
   }
 

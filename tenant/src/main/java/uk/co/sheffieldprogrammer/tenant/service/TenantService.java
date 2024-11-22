@@ -2,10 +2,12 @@ package uk.co.sheffieldprogrammer.tenant.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uk.co.sheffieldprogrammer.tenant.dto.TenantDto;
 import uk.co.sheffieldprogrammer.tenant.model.Tenant;
+import uk.co.sheffieldprogrammer.tenant.model.TenantMapper;
 import uk.co.sheffieldprogrammer.tenant.repository.TenantRepository;
 
 import java.util.ArrayList;
@@ -18,12 +20,18 @@ public class TenantService {
     @Autowired
     private TenantRepository tenantRepository;
 
-    public void addTenant(TenantDto tenantDto) {
-        tenantRepository.save(Tenant.builder()
+    @Autowired
+    private TenantMapper tenantMapper;
+
+    @CacheEvict(value = "tenants", allEntries = true)
+    public TenantDto addTenant(TenantDto tenantDto) {
+        Tenant saved = tenantRepository.save(Tenant.builder()
                 .address(tenantDto.getAddress())
                 .emailAddress(tenantDto.getEmailAddress())
                 .name(tenantDto.getName())
                 .build());
+        log.info("Adding tenant {}", saved.getId());
+        return tenantMapper.toDto(saved);
     }
 
     @Cacheable("tenants")
@@ -44,6 +52,7 @@ public class TenantService {
 
     }
 
+    @CacheEvict(value = "tenants", allEntries = true)
     public void deleteTenant(Long id) {
         tenantRepository.deleteById(id);
     }

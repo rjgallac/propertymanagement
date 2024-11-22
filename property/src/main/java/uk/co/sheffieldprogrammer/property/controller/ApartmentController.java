@@ -17,9 +17,9 @@ public class ApartmentController {
     private ApartmentService apartmentService;
 
     @PostMapping
-    void addApartment(@RequestBody ApartmentDto apartmentDto) {
+    public ResponseEntity<ApartmentDto> addApartment(@RequestBody ApartmentDto apartmentDto) {
 
-        apartmentService.addApartment(apartmentDto);
+        return ResponseEntity.ok(apartmentService.addApartment(apartmentDto));
     }
 
     @GetMapping

@@ -8,6 +8,7 @@ import uk.co.sheffieldprogrammer.tenant.dto.ApartmentDto;
 import uk.co.sheffieldprogrammer.tenant.dto.BookingDto;
 import uk.co.sheffieldprogrammer.tenant.dto.TenantDto;
 import uk.co.sheffieldprogrammer.tenant.model.Booking;
+import uk.co.sheffieldprogrammer.tenant.model.BookingMapper;
 import uk.co.sheffieldprogrammer.tenant.model.Tenant;
 import uk.co.sheffieldprogrammer.tenant.repository.BookingRepository;
 import uk.co.sheffieldprogrammer.tenant.repository.TenantRepository;
@@ -27,6 +28,9 @@ public class BookingService {
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private BookingMapper bookingMapper;
 
     public List<BookingDto> getBookings() {
         List<BookingDto> bookingsDto = new ArrayList<>();
@@ -62,13 +66,17 @@ public class BookingService {
     }
 
 
-    public void addBooking(BookingDto bookingDto){
+    public BookingDto addBooking(BookingDto bookingDto){
         Tenant tenant = tenantRepository.findById(bookingDto.getTenantDto().getId()).get();
         Booking booking = Booking.builder()
                 .tenant(tenant)
                 .apartmentId(bookingDto.getApartmentDto().getId())
                 .build();
-        bookingRepository.save(booking);
+        ApartmentDto apartmentDto = propertyService.getApartment(booking.getApartmentId());
+        Booking saved = bookingRepository.save(booking);
+        BookingDto dto = bookingMapper.toDto(saved);
+        dto.setApartmentDto(apartmentDto);
+        return dto;
     }
 
     public void deleteBooking(Long id) {
