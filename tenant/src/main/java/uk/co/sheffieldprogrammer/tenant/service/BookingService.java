@@ -2,6 +2,7 @@ package uk.co.sheffieldprogrammer.tenant.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uk.co.sheffieldprogrammer.tenant.dto.ApartmentDto;
@@ -32,7 +33,9 @@ public class BookingService {
     @Autowired
     private BookingMapper bookingMapper;
 
+    @Cacheable("bookings")
     public List<BookingDto> getBookings() {
+        log.info("getting bookings");
         List<BookingDto> bookingsDto = new ArrayList<>();
         Iterable<Booking> bookings = bookingRepository.findAll();
         for (Booking booking : bookings) {
@@ -65,7 +68,7 @@ public class BookingService {
         return bookingDto;
     }
 
-
+    @CacheEvict(value = "bookings", allEntries = true)
     public BookingDto addBooking(BookingDto bookingDto){
         Tenant tenant = tenantRepository.findById(bookingDto.getTenantDto().getId()).get();
         Booking booking = Booking.builder()
@@ -74,12 +77,15 @@ public class BookingService {
                 .build();
         ApartmentDto apartmentDto = propertyService.getApartment(booking.getApartmentId());
         Booking saved = bookingRepository.save(booking);
+        log.info("add booking {}", saved.getId());
         BookingDto dto = bookingMapper.toDto(saved);
         dto.setApartmentDto(apartmentDto);
         return dto;
     }
 
+    @CacheEvict(value = "bookings", allEntries = true)
     public void deleteBooking(Long id) {
+        log.info("delete booking {}",  id);
         bookingRepository.deleteById(id);
     }
 }

@@ -2,6 +2,8 @@ package uk.co.sheffieldprogrammer.property.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uk.co.sheffieldprogrammer.property.dto.ApartmentDto;
 import uk.co.sheffieldprogrammer.property.dto.ApartmentMapper;
@@ -28,6 +30,7 @@ public class ApartmentService {
     @Autowired
     private ApartmentMapper apartmentMapper;
 
+    @CacheEvict(value = "apartments", allEntries = true)
     public ApartmentDto addApartment(ApartmentDto apartmentDto) {
         Optional<Property> property = propertyRepository.findById(apartmentDto.getPropertyDto().getId());
         Apartment apartment = Apartment.builder()
@@ -36,10 +39,13 @@ public class ApartmentService {
                 .build();
 
         Apartment saved = apartmentRepository.save(apartment);
+        log.info("add apartment {}", saved.getId());
         return apartmentMapper.toDto(apartment);
     }
 
+    @Cacheable("apartments")
     public List<ApartmentDto> getApartments() {
+        log.info("Getting apartments");
         List<ApartmentDto> apartmentDtos = new ArrayList<>();
         Iterable<Apartment> apartments = apartmentRepository.findAll();
         for (Apartment apartment : apartments) {
@@ -60,7 +66,9 @@ public class ApartmentService {
 
     }
 
+    @CacheEvict(value = "apartments", allEntries = true)
     public void deleteApartment(Long id) {
+        log.info("delete apartment {}", id);
         apartmentRepository.deleteById(id);
     }
 }

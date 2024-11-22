@@ -54,6 +54,7 @@ public class TenantService {
 
     @CacheEvict(value = "tenants", allEntries = true)
     public void deleteTenant(Long id) {
+        log.info("Deleting tenant {}", id);
         tenantRepository.deleteById(id);
     }
 }

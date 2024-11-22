@@ -23,8 +23,8 @@ public class PropertyController {
     }
 
     @GetMapping
-    public List<PropertyDto> getProperties(){
-        return propertyService.getProperties();
+    public ResponseEntity<List<PropertyDto>> getProperties(){
+        return ResponseEntity.ok(propertyService.getProperties());
     }
 
     @GetMapping("/{id}")
