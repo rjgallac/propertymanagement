@@ -27,7 +27,7 @@ export const useApartmentStore = defineStore('apartment', () => {
         .then(response => response.json())
         .then(data => {
             apartments.value.push(data);
-        });;
+        });
 
   }
 

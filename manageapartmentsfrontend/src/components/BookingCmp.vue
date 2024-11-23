@@ -6,11 +6,9 @@ import { useApartmentStore } from '@/stores/apartmentStore';
 import { useTenantStore } from '@/stores/tenantStore';
 
 const bookingStore = useBookingStore();
-const tenantStore = useTenantStore();
 const apartmentStore = useApartmentStore();
 bookingStore.fetchBookings();
 apartmentStore.fetchApartments();
-tenantStore.fetchTenants();
 
 
 let selectedApartment = ref(null)
@@ -18,7 +16,7 @@ let selectedApartment = ref(null)
 let selectedTenant = ref(null)
 
 function addBooking() {
-    bookingStore.addBooking({ "tenantDto": { "id": selectedTenant.value }, "apartmentDto": { "id": selectedApartment.value } })
+    bookingStore.addBooking({ "apartmentDto": { "id": selectedApartment.value } })
 }
 
 function deleteBooking(id) {
@@ -35,7 +33,7 @@ function deleteBooking(id) {
     </thead>
     <tbody>
       <tr v-for="booking in bookingStore.bookings">
-        <td>{{ booking.tenantDto.name }}</td>
+        <!-- <td>{{ booking.tenantDto.name }}</td> -->
         <td> {{booking.apartmentDto.propertyDto.address}}</td>
         <td> <v-btn @click="deleteBooking(booking.id)">del</v-btn></td>
       </tr>
@@ -52,14 +50,6 @@ function deleteBooking(id) {
         label="Apartment"
         :items="apartmentStore.apartments"
         item-title="rent"
-        item-value="id">
-      </v-select>
-      
-
-    <v-select v-model="selectedTenant" 
-        label="Tenant"
-        :items="tenantStore.tenants"
-        item-title="name"
         item-value="id">
       </v-select>
      

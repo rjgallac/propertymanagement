@@ -11,8 +11,8 @@ public class BookingMapper {
     public BookingDto toDto(Booking booking) {
         return BookingDto.builder()
                 .id(booking.getId())
-                .apartmentDto(ApartmentDto.builder().id(booking.getTenant().getId()).build())
-                .tenantDto(TenantDto.builder().id(booking.getTenant().getId()).name(booking.getTenant().getName()).build())
+//                .apartmentDto(ApartmentDto.builder().id(booking.getTenant().getId()).build())
+//                .tenantDto(TenantDto.builder().id(booking.getTenant().getId()).name(booking.getTenant().getName()).build())
                 .build();
     }
 }

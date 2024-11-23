@@ -19,7 +19,5 @@ public class Booking {
 
     private Long apartmentId;
 
-    @ManyToOne
-    @JoinColumn(name="tenant_id", nullable=false)
-    private Tenant tenant;
+    private String email;
 }

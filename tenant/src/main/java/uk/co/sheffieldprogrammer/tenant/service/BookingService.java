@@ -10,9 +10,7 @@ import uk.co.sheffieldprogrammer.tenant.dto.BookingDto;
 import uk.co.sheffieldprogrammer.tenant.dto.TenantDto;
 import uk.co.sheffieldprogrammer.tenant.model.Booking;
 import uk.co.sheffieldprogrammer.tenant.model.BookingMapper;
-import uk.co.sheffieldprogrammer.tenant.model.Tenant;
 import uk.co.sheffieldprogrammer.tenant.repository.BookingRepository;
-import uk.co.sheffieldprogrammer.tenant.repository.TenantRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +22,6 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @Autowired
-    private TenantRepository tenantRepository;
 
     @Autowired
     private PropertyService propertyService;
@@ -43,7 +39,7 @@ public class BookingService {
             ApartmentDto apartmentDto = propertyService.getApartment(booking.getApartmentId());
             BookingDto bookingDto = BookingDto.builder()
                     .id(booking.getId())
-                    .tenantDto(TenantDto.builder().name(booking.getTenant().getName()).build())
+//                    .tenantDto(TenantDto.builder().name(booking.getTenant().getName()).build())
                     .apartmentDto(apartmentDto)
                     .build();
             bookingsDto.add(bookingDto);
@@ -58,11 +54,7 @@ public class BookingService {
 
         BookingDto bookingDto = BookingDto.builder()
                 .id(booking.getId())
-                .tenantDto(TenantDto.builder()
-                        .id(booking.getTenant().getId())
-                        .name(booking.getTenant().getName())
-                        .address(booking.getTenant().getAddress())
-                        .build())
+
                 .build();
 
         return bookingDto;
@@ -70,9 +62,8 @@ public class BookingService {
 
     @CacheEvict(value = "bookings", allEntries = true)
     public BookingDto addBooking(BookingDto bookingDto){
-        Tenant tenant = tenantRepository.findById(bookingDto.getTenantDto().getId()).get();
         Booking booking = Booking.builder()
-                .tenant(tenant)
+                .email(bookingDto.getEmail())
                 .apartmentId(bookingDto.getApartmentDto().getId())
                 .build();
         ApartmentDto apartmentDto = propertyService.getApartment(booking.getApartmentId());
