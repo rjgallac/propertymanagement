@@ -47,6 +47,24 @@ public class BookingService {
         return bookingsDto;
     }
 
+    @Cacheable("bookings")
+    public List<BookingDto> getBookingsByEmail(String email) {
+        log.info("getting bookings");
+        List<BookingDto> bookingsDto = new ArrayList<>();
+        Iterable<Booking> bookings = bookingRepository.findAllByEmail(email);
+        for (Booking booking : bookings) {
+
+            ApartmentDto apartmentDto = propertyService.getApartment(booking.getApartmentId());
+            BookingDto bookingDto = BookingDto.builder()
+                    .id(booking.getId())
+//                    .tenantDto(TenantDto.builder().name(booking.getTenant().getName()).build())
+                    .apartmentDto(apartmentDto)
+                    .build();
+            bookingsDto.add(bookingDto);
+        }
+        return bookingsDto;
+    }
+
     @Cacheable("booking")
     public BookingDto getBookingByApartmentId(Long id) {
         log.info("getting bookings for apartment {}", id);

@@ -6,6 +6,11 @@ import { defineStore } from 'pinia';
 export const useLoginStore = defineStore('login', () => {
 
     let loggedin = ref(localStorage.getItem("auth") ? true : false);
+    let role = ref(null);
+    if(loggedin.value) {
+      role = JSON.parse(localStorage.getItem("auth")).role;
+      console.log(role)
+    }
 
     function logout() {
       localStorage.removeItem('auth');

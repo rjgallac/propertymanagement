@@ -1,7 +1,11 @@
 
 import { ref } from 'vue';
+import router from '@/router/index.ts'
 
 import { defineStore } from 'pinia';
+import { useLoginStore } from '@/stores/loginStore';
+
+const loginStore = useLoginStore();
 
 export const useBookingStore = defineStore('booking', () => {
   let bookings = ref([]);
@@ -21,7 +25,11 @@ export const useBookingStore = defineStore('booking', () => {
     .then(data => {
       bookings.value = data;
     })
-    .catch(error => console.error(error));;
+    .catch(error => {
+      console.error(error);
+      loginStore.logout();
+      router.push({path:'/'});
+    });
   }
 
   function addBooking(booking){

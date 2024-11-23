@@ -3,6 +3,7 @@ package uk.co.sheffieldwebprogrammer.propertysecurity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uk.co.sheffieldwebprogrammer.propertysecurity.dto.JwtAuthenticationResponse;
@@ -11,6 +12,8 @@ import uk.co.sheffieldwebprogrammer.propertysecurity.dto.SignUpRequest;
 import uk.co.sheffieldwebprogrammer.propertysecurity.model.Role;
 import uk.co.sheffieldwebprogrammer.propertysecurity.model.User;
 import uk.co.sheffieldwebprogrammer.propertysecurity.repository.UserRepository;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        Optional<? extends GrantedAuthority> first = user.getAuthorities().stream().findFirst();
+        return JwtAuthenticationResponse.builder().token(jwt).role(first.get().getAuthority()).build();
     }
 }

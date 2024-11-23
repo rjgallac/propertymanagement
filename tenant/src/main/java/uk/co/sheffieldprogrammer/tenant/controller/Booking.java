@@ -2,10 +2,12 @@ package uk.co.sheffieldprogrammer.tenant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import uk.co.sheffieldprogrammer.tenant.dto.BookingDto;
 import uk.co.sheffieldprogrammer.tenant.service.BookingService;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -22,9 +24,15 @@ public class Booking {
     }
 
 
+//    @GetMapping()
+//    public ResponseEntity<List<BookingDto>> getBookings() {
+//        return ResponseEntity.ok(bookingService.getBookings());
+//    }
+
     @GetMapping()
-    public ResponseEntity<List<BookingDto>> getBookings() {
-        return ResponseEntity.ok(bookingService.getBookings());
+    public ResponseEntity<List<BookingDto>> getBookingsByEmail(@AuthenticationPrincipal(expression = "username") String username) {
+        System.out.println(username);
+        return ResponseEntity.ok(bookingService.getBookingsByEmail(username));
     }
 
     @GetMapping("/apartment/{id}")

@@ -4,16 +4,17 @@
       <!--  -->
       <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
       <v-divider></v-divider>
-      <RouterLink to="/landlord" v-if="loginStore.loggedin"><v-list-item link title="Landlords"></v-list-item></RouterLink>
-      <RouterLink to="/property" v-if="loginStore.loggedin"><v-list-item link title="Properties"></v-list-item></RouterLink>
-      <RouterLink to="/apartment" v-if="loginStore.loggedin"><v-list-item link title="Apartments"></v-list-item></RouterLink>
+      <RouterLink to="/landlord" v-if="loginStore.loggedin && !loginStore.role == 'USER'"><v-list-item link title="Landlords"></v-list-item></RouterLink>
+      <RouterLink to="/property" v-if="loginStore.loggedin && !loginStore.role == 'USER'"><v-list-item link title="Properties"></v-list-item></RouterLink>
+      <RouterLink to="/apartment" v-if="loginStore.loggedin && !loginStore.role == 'USER'"><v-list-item link title="Apartments"></v-list-item></RouterLink>
       <v-divider></v-divider>
 
       <RouterLink to="/booking" v-if="loginStore.loggedin"><v-list-item link title="Bookings"></v-list-item></RouterLink>
-      <RouterLink to="/tenant" v-if="loginStore.loggedin"><v-list-item link title="Tenants"></v-list-item></RouterLink>
+      <RouterLink to="/tenant" v-if="loginStore.loggedin && !loginStore.role == 'USER'"><v-list-item link title="Tenants"></v-list-item></RouterLink>
       <v-divider></v-divider>
       <RouterLink to="/login" v-if="!loginStore.loggedin"><v-list-item link title="Login"></v-list-item></RouterLink>
       <RouterLink to="/logout" v-if="loginStore.loggedin"><v-list-item link title="Logout"></v-list-item></RouterLink>
+      <!-- {{ loginStore.role }} -->
     </v-navigation-drawer>
 
     <v-app-bar>
