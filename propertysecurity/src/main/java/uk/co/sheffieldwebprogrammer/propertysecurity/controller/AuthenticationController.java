@@ -20,6 +20,16 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 
+    @PostMapping("/signuplandlord")
+    public ResponseEntity<JwtAuthenticationResponse> signuplandlord(@RequestBody SignUpRequest request) {
+        return ResponseEntity.ok(authenticationService.signupLandlord(request));
+    }
+
+    @PostMapping("/signupadmin")
+    public ResponseEntity<JwtAuthenticationResponse> signupadmin(@RequestBody SignUpRequest request) {
+        return ResponseEntity.ok(authenticationService.signupAdmin(request));
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SignInRequest request) {
         return ResponseEntity.ok(authenticationService.signin(request));

@@ -5,9 +5,15 @@ import { defineStore } from 'pinia';
 
 export const useLandlordStore = defineStore('landlord', () => {
   let landlords = ref([]);
+  let token = JSON.parse(localStorage.getItem('auth'));
+  let jwt = token.token;
+
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization' : 'Bearer ' + jwt
+    },
 };
   function fetchLandlords(){
     fetch('http://localhost:8080/landlord', requestOptions)

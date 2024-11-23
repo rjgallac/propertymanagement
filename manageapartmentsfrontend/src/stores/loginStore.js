@@ -8,7 +8,7 @@ export const useLoginStore = defineStore('login', () => {
     let loggedin = ref(localStorage.getItem("auth") ? true : false);
     let role = ref(null);
     if(loggedin.value) {
-      role = JSON.parse(localStorage.getItem("auth")).role;
+      role.value = JSON.parse(localStorage.getItem("auth")).role;
       console.log(role)
     }
 
@@ -30,6 +30,7 @@ export const useLoginStore = defineStore('login', () => {
                 console.log(data)
                 localStorage.setItem('auth', JSON.stringify(data));
                 loggedin.value = true
+                role.value = data.role;
             })
             .catch(error => {
                 console.log(error)
@@ -37,5 +38,5 @@ export const useLoginStore = defineStore('login', () => {
     }
     
 
-  return {loggedin, logout, login}
+  return {loggedin, logout, login, role}
 });

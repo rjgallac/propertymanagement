@@ -5,9 +5,14 @@ import { defineStore } from 'pinia';
 
 export const usePropertyStore = defineStore('property', () => {
   let properties = ref([]);
+  let token = JSON.parse(localStorage.getItem('auth'));
+  let jwt = token.token;
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization' : 'Bearer ' + jwt
+    },
 };
   function fetchProperties(){
     fetch('http://localhost:8080/property', requestOptions)

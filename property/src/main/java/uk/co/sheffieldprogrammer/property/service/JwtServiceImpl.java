@@ -1,4 +1,4 @@
-package uk.co.sheffieldwebprogrammer.propertysecurity.service;
+package uk.co.sheffieldprogrammer.property.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -19,21 +19,22 @@ import java.util.function.Function;
 public class JwtServiceImpl implements JwtService {
     @Value("${token.signing.key}")
     private String jwtSigningKey;
-
-    HashMap extraClaims = new HashMap();
-
-    public void addClaim(String key, String value) {
-        this.extraClaims.put("Authorities", value);
-    }
-
     @Override
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractRole(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(getSigningKey())
+                .parseClaimsJws(token)
+                .getBody();
+        return (String)claims.get("Authorities");
+    }
+
     @Override
     public String generateToken(UserDetails userDetails) {
-        return generateToken(extraClaims, userDetails);
+        return generateToken(new HashMap<>(), userDetails);
     }
 
     @Override
