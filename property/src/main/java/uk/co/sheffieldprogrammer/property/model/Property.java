@@ -21,9 +21,7 @@ public class Property {
 
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name="landlord_id", nullable=false)
-    private Landlord landlord;
+    private String landlord;
 
     @OneToMany(mappedBy = "property")
     private List<Apartment> apartments;

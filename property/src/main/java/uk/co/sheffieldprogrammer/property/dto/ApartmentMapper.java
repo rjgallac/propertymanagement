@@ -15,10 +15,10 @@ public class ApartmentMapper {
                 .propertyDto(PropertyDto.builder()
                         .id(apartment.getProperty().getId())
                         .address(apartment.getProperty().getAddress())
-                        .landlordDto(LandlordDto.builder()
-                                .id(apartment.getProperty().getLandlord().getId())
-                                .name(apartment.getProperty().getLandlord().getName())
-                                .build())
+//                        .landlordDto(LandlordDto.builder()
+//                                .id(apartment.getProperty().getLandlord().getId())
+//                                .name(apartment.getProperty().getLandlord().getName())
+//                                .build())
                         .build())
                 .build();
     }

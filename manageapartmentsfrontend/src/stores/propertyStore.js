@@ -1,5 +1,6 @@
 
 import { ref } from 'vue';
+import router from '@/router/index.ts'
 
 import { defineStore } from 'pinia';
 
@@ -19,13 +20,19 @@ export const usePropertyStore = defineStore('property', () => {
       .then(response => response.json())
       .then(data => {
         properties.value = data
+      }).catch(error => {
+        router.push({path:'/login'});
+
       });
   }
 
   function addProperty(property) {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
+      },
       body: JSON.stringify(property)
     };
     fetch('http://localhost:8080/property', requestOptions)
@@ -39,7 +46,10 @@ export const usePropertyStore = defineStore('property', () => {
   function deleteProperty(id) {
     const requestOptions = {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
+      },
     };
     fetch('http://localhost:8080/property/' + id, requestOptions)
       .then(response => {

@@ -6,7 +6,7 @@
       <v-divider></v-divider>
       <RouterLink to="/landlord" v-if="loginStore.loggedin && loginStore.role == 'ADMIN'"><v-list-item link title="Landlords"></v-list-item></RouterLink>
       <RouterLink to="/property" v-if="loginStore.loggedin && loginStore.role == 'LANDLORD'"><v-list-item link title="Properties"></v-list-item></RouterLink>
-      <RouterLink to="/apartment" v-if="loginStore.loggedin && loginStore.role == 'LANDLORD'"><v-list-item link title="Apartments"></v-list-item></RouterLink>
+      <RouterLink to="/apartment" v-if="loginStore.loggedin && (loginStore.role == 'LANDLORD' || loginStore.role == 'USER')"><v-list-item link title="Apartments"></v-list-item></RouterLink>
       <v-divider></v-divider>
 
       <RouterLink to="/booking" v-if="loginStore.loggedin && loginStore.role == 'USER'"><v-list-item link title="Bookings"></v-list-item></RouterLink>

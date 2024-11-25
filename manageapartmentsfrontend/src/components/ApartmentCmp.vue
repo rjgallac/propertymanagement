@@ -11,13 +11,10 @@ propertyStore.fetchProperties();
 
 let selectedPropertyId = ref(null)
 
-let addApartmentDto = ref({
-  propertyDto:{ id: 1},
-  rent: 123
-})
+let apartmentRent = ref(0)
 
 function addApartment(){
-    apartmentStore.addApartment(addApartmentDto.value)
+    apartmentStore.addApartment({ propertyDto:{ id: selectedPropertyId.value}, rent: apartmentRent.value })
 }
 
 function deleteApartment(id) {
@@ -53,7 +50,7 @@ function deleteApartment(id) {
                 item-value="id">
             </v-select>
 
-            <v-text-field label="Rent" v-model="addApartmentDto.rent" type="text"></v-text-field>
+            <v-text-field label="Rent" v-model="apartmentRent" type="text"></v-text-field>
             <v-btn @click="addApartment()"> submit</v-btn>
         </form>
     </div>

@@ -11,7 +11,7 @@ export const useApartmentStore = defineStore('apartment', () => {
     method: 'GET',
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization' : 'Bearer ' + jwt
+      'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
     },
 };
   function fetchApartments(){
@@ -25,7 +25,10 @@ export const useApartmentStore = defineStore('apartment', () => {
   function addApartment(apartment){
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
+        },
         body: JSON.stringify(apartment)
       };
       fetch('http://localhost:8080/apartment', requestOptions)
@@ -39,7 +42,10 @@ export const useApartmentStore = defineStore('apartment', () => {
   function deleteApartment(id) {
     const requestOptions = {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
+        },
       };
       fetch('http://localhost:8080/apartment/' + id, requestOptions)
         .then(response => {

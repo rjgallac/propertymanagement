@@ -19,7 +19,7 @@ public class PropertyDto {
 
     private String address;
 
-    private LandlordDto landlordDto;
+    private String landlord;
 
     private List<ApartmentDto> apartmentDtos;
 

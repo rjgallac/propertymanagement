@@ -2,6 +2,7 @@ package uk.co.sheffieldprogrammer.property.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import uk.co.sheffieldprogrammer.property.dto.PropertyDto;
 import uk.co.sheffieldprogrammer.property.service.PropertyService;
@@ -18,12 +19,15 @@ public class PropertyController {
 
 
     @PostMapping
-    public ResponseEntity<PropertyDto> addProperty(@RequestBody PropertyDto propertyDto){
+    public ResponseEntity<PropertyDto> addProperty(@RequestBody PropertyDto propertyDto,
+                                                   @AuthenticationPrincipal(expression = "username") String username){
+        System.out.println(username);
+        propertyDto.setLandlord(username);
         return ResponseEntity.ok(propertyService.addProperty(propertyDto));
     }
 
     @GetMapping
-    public ResponseEntity<List<PropertyDto>> getProperties(){
+    public ResponseEntity<List<PropertyDto>> getProperties(@AuthenticationPrincipal(expression = "username") String username){
         return ResponseEntity.ok(propertyService.getProperties());
     }
 

@@ -39,7 +39,7 @@ export const useBookingStore = defineStore('booking', () => {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + jwt
+        'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
       },
       body: JSON.stringify(booking)
     };
@@ -54,7 +54,10 @@ export const useBookingStore = defineStore('booking', () => {
   function deleteBooking(id) {
     const requestOptions = {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('auth')).token
+        },
       };
       fetch('http://localhost:8081/booking/' + id, requestOptions)
         .then(response => {

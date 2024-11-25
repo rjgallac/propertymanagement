@@ -3,7 +3,6 @@ import { ref } from 'vue';
 
 import { useBookingStore } from '@/stores/bookingStore';
 import { useApartmentStore } from '@/stores/apartmentStore';
-import { useTenantStore } from '@/stores/tenantStore';
 
 const bookingStore = useBookingStore();
 const apartmentStore = useApartmentStore();

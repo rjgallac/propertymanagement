@@ -2,6 +2,7 @@ package uk.co.sheffieldprogrammer.property.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import uk.co.sheffieldprogrammer.property.dto.ApartmentDto;
 import uk.co.sheffieldprogrammer.property.service.ApartmentService;
@@ -22,9 +23,9 @@ public class ApartmentController {
         return ResponseEntity.ok(apartmentService.addApartment(apartmentDto));
     }
 
+
     @GetMapping
     public List<ApartmentDto> getApartments() {
-
         return apartmentService.getApartments();
     }
 

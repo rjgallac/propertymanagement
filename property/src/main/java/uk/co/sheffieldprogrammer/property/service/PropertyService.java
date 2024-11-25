@@ -7,9 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uk.co.sheffieldprogrammer.property.dto.PropertyDto;
 import uk.co.sheffieldprogrammer.property.dto.PropertyMapper;
-import uk.co.sheffieldprogrammer.property.model.Landlord;
 import uk.co.sheffieldprogrammer.property.model.Property;
-import uk.co.sheffieldprogrammer.property.repository.LandlordRepository;
 import uk.co.sheffieldprogrammer.property.repository.PropertyRepository;
 
 import java.util.ArrayList;
@@ -22,18 +20,15 @@ public class PropertyService {
     @Autowired
     private PropertyRepository propertyRepository;
 
-    @Autowired
-    private LandlordRepository landlordRepository;
 
     @Autowired
     private PropertyMapper propertyMapper;
 
     @CacheEvict(value = "properties", allEntries = true)
     public PropertyDto addProperty(PropertyDto propertyDto) {
-        Landlord landlord = landlordRepository.findById(propertyDto.getLandlordDto().getId()).get();
 
         Property property = Property.builder()
-                .landlord(landlord)
+                .landlord(propertyDto.getLandlord())
                 .address(propertyDto.getAddress())
                 .build();
         Property saved = propertyRepository.save(property);
